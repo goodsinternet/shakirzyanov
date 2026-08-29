@@ -1,0 +1,217 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+  Design tokens: перенесены с исходного сайта (digi-spark).
+  Тёмная тема, акцент — бирюзово-синий градиент, Space Grotesk.
+  Значения цветов — полные hsl(...), как требует Tailwind v4:
+  утилиты (bg-primary, border-border, /alpha-модификаторы) работают нативно.
+*/
+:root {
+  --background: hsl(230 15% 8%);
+  --foreground: hsl(220 15% 90%);
+  --card: hsl(230 15% 12%);
+  --card-foreground: hsl(220 15% 90%);
+  --popover: hsl(230 15% 10%);
+  --popover-foreground: hsl(220 15% 90%);
+  --primary: hsl(170 80% 50%);
+  --primary-foreground: hsl(230 15% 5%);
+  --secondary: hsl(230 12% 14%);
+  --secondary-foreground: hsl(220 15% 80%);
+  --muted: hsl(230 12% 16%);
+  --muted-foreground: hsl(220 10% 55%);
+  --accent: hsl(170 80% 50%);
+  --accent-foreground: hsl(230 15% 5%);
+  --destructive: hsl(0 72% 55%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --border: hsl(230 12% 18%);
+  --input: hsl(230 12% 18%);
+  --ring: hsl(170 80% 50%);
+  --radius: 0.75rem;
+
+  --subtle: hsl(220 10% 50%);
+  --heading: hsl(220 15% 95%);
+  --surface: hsl(230 14% 12%);
+  --surface-hover: hsl(230 14% 16%);
+  --cta-gradient: linear-gradient(135deg, hsl(170, 80%, 50%), hsl(200, 90%, 55%));
+  --cta-gradient-hover: linear-gradient(135deg, hsl(170, 80%, 45%), hsl(200, 90%, 48%));
+  --shadow-soft: 0 2px 20px -4px hsl(0 0% 0% / 0.3);
+  --shadow-card: 0 4px 30px -8px hsl(0 0% 0% / 0.4);
+  --shadow-elevated: 0 8px 40px -12px hsl(0 0% 0% / 0.5);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-surface: var(--surface);
+  --color-subtle: var(--subtle);
+  --color-heading: var(--heading);
+  --font-sans: var(--font-space-grotesk), system-ui, sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-space-grotesk), system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .section-padding {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  @media (min-width: 640px) {
+    .section-padding {
+      padding-top: 7rem;
+      padding-bottom: 7rem;
+    }
+  }
+
+  .section-container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 72rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .section-container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .gradient-text {
+    background: var(--cta-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-glow-text {
+    filter: drop-shadow(0 0 20px hsl(170 80% 50% / 0.4));
+  }
+
+  .text-subtle {
+    color: var(--subtle);
+  }
+
+  .surface-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-soft);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 0.3s;
+  }
+  @media (min-width: 640px) {
+    .surface-card {
+      padding: 2rem;
+    }
+  }
+  .surface-card:hover {
+    box-shadow: var(--shadow-card);
+    background: var(--surface-hover);
+    border-color: color-mix(in srgb, var(--primary) 20%, transparent);
+  }
+
+  .cta-button {
+    background: var(--cta-gradient);
+    border-radius: 0.75rem;
+    padding: 0.875rem 1.75rem;
+    font-weight: 600;
+    color: var(--primary-foreground);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 0.3s;
+  }
+  .cta-button:hover {
+    background: var(--cta-gradient-hover);
+    transform: scale(1.02);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  }
+
+  .cta-button-outline {
+    border-radius: 0.75rem;
+    border-width: 2px;
+    border-color: color-mix(in srgb, var(--foreground) 15%, transparent);
+    padding: 0.875rem 1.75rem;
+    font-weight: 600;
+    color: var(--foreground);
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 0.3s;
+  }
+  .cta-button-outline:hover {
+    border-color: color-mix(in srgb, var(--primary) 50%, transparent);
+    background: color-mix(in srgb, var(--primary) 5%, transparent);
+  }
+
+  .hero-button-glow {
+    box-shadow: 0 0 25px -5px #19e6c466, 0 0 10px -3px #25aff44d;
+  }
+  .hero-button-glow:hover {
+    box-shadow: 0 0 35px -5px #19e6c480, 0 0 15px -3px #25aff466;
+  }
+
+  /* Приглушённая кнопка CTA — для вторичных секций (услуги и т.д.):
+     та же геометрия, но без градиента и свечения. */
+  .cta-button-muted {
+    border-radius: 0.75rem;
+    padding: 0.625rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--secondary-foreground);
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 0.3s;
+  }
+  .cta-button-muted:hover {
+    color: var(--foreground);
+    border-color: color-mix(in srgb, var(--primary) 35%, transparent);
+    background: var(--muted);
+  }
+
+  .dot-grid {
+    background-image: radial-gradient(circle, var(--primary) 1.5px, transparent 1.5px);
+    background-size: 12px 12px;
+  }
+}
