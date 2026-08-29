@@ -52,7 +52,7 @@ export const projects: DemoProject[] = [
   {
     title: "Второй пилот",
     subtitle: "AI-ассистент для бизнеса",
-    image: "/assets/portfolio-assistpilot-ycRJK9zE.png",
+    image: "/assets/portfolio-assistpilot.webp",
     imageAlt: "Второй пилот",
     link: "https://assist-pilot-pro.lovable.app/",
     accent: "200 90% 55%",
@@ -69,7 +69,7 @@ export const projects: DemoProject[] = [
   {
     title: "GutHealth AI",
     subtitle: "Диагностика здоровья ЖКТ",
-    image: "/assets/portfolio-guthealth.webp",
+    image: "/assets/portfolio-guthealth-v2.webp",
     imageAlt: "GutHealth AI",
     link: "https://gut-health-report.replit.app/",
     accent: "140 70% 45%",
@@ -85,7 +85,7 @@ export const projects: DemoProject[] = [
   {
     title: "CardMaker",
     subtitle: "AI-генератор карточек товаров",
-    image: "/assets/portfolio-cardmaster-WqCr9oT_.png",
+    image: "/assets/portfolio-cardmaster.webp",
     imageAlt: "CardMaker",
     link: "https://preview--creatorcardbot.lovable.app/",
     accent: "35 85% 55%",
@@ -104,8 +104,9 @@ export const projects: DemoProject[] = [
 
 export const portfolioSection = {
   eyebrow: "Портфолио",
-  /** Новый честный заголовок вместо «Проекты с реальными результатами». */
-  title: "Проекты: что умею собрать",
+  /** Честный заголовок: это витрина навыков, а не «кейсы с результатами». */
+  titleLead: "Что",
+  titleAccent: "могу создать",
   subtitle:
     "Живые демо — откройте и проверьте сами. Каждый кейс: что внутри, что реализовано, какие задачи закрывает.",
 } as const;

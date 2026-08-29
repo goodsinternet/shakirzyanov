@@ -54,3 +54,4 @@ server.log
 /skills/
 # recon artifacts (разведка исходного сайта, не часть сайта)
 recon/
+upload/

@@ -146,7 +146,7 @@ function ProjectCard({ p, index }: { p: DemoProject; index: number }) {
 }
 
 /**
- * Портфолио — «Проекты: что умею собрать».
+ * Портфолио — «Что могу создать».
  * Правило честности: только проверяемые факты (стек, реализация, живое демо),
  * никаких неподтверждённых цифр. Каждая карточка помечена бейджем «Демо-кейс».
  */
@@ -163,8 +163,8 @@ export function Portfolio() {
             {portfolioSection.eyebrow}
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Проекты:{" "}
-            <span className="gradient-text">что умею собрать</span>
+            {portfolioSection.titleLead}{" "}
+            <span className="gradient-text">{portfolioSection.titleAccent}</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             {portfolioSection.subtitle}

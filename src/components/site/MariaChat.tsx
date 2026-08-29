@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { X, SendHorizontal } from "lucide-react";
+import { X, SendHorizontal, Minus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { OPEN_CHAT_EVENT, openMariaChat } from "@/lib/chat-events";
 
@@ -147,7 +147,7 @@ export function MariaChat() {
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.25 }}
             className="fixed bottom-24 right-5 z-50 w-[340px] sm:w-[380px] max-w-[calc(100vw-2.5rem)] rounded-2xl shadow-2xl bg-background border border-border flex flex-col overflow-hidden"
-            style={{ maxHeight: "500px" }}
+            style={{ maxHeight: "min(500px, calc(100dvh - 9rem))" }}
           >
             <div className="px-5 py-4 border-b border-border flex items-center gap-3">
               <img src={MARIA_AVATAR} alt="Мария" className="w-9 h-9 rounded-full object-cover" />
@@ -158,9 +158,17 @@ export function MariaChat() {
                   AI-консультант
                 </p>
               </div>
+              <button
+                onClick={() => setOpen(false)}
+                aria-label="Свернуть чат"
+                title="Свернуть чат"
+                className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+              >
+                <Minus size={18} />
+              </button>
             </div>
 
-            <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3" style={{ minHeight: "260px" }}>
+            <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3" style={{ minHeight: "min(260px, 40dvh)" }}>
               {messages.map((m, i) => (
                 <div key={i} className={`flex ${m.from === "user" ? "justify-end" : "justify-start"}`}>
                   <div
