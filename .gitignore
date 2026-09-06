@@ -55,3 +55,9 @@ server.log
 # recon artifacts (разведка исходного сайта, не часть сайта)
 recon/
 upload/
+
+# template/infra noise — не часть сайта
+/db/
+/examples/
+/mini-services/
+/.zscripts/
