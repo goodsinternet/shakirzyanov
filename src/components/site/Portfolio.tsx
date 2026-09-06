@@ -56,9 +56,15 @@ function ProjectCard({ p, index }: { p: DemoProject; index: number }) {
               alt={p.imageAlt}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              className={`transition-transform duration-500 group-hover:scale-[1.03] ${
+                p.imageFit === "contain" ? "object-contain" : "object-cover"
+              }`}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-background/30" />
+            <div
+              className={`absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-background/30 ${
+                p.imageFit === "contain" ? "hidden" : ""
+              }`}
+            />
             <span
               className="absolute bottom-4 left-4 inline-flex items-center gap-1.5 rounded-lg text-xs font-semibold px-3 py-2 backdrop-blur-sm transition-transform group-hover:translate-x-0.5"
               style={{ background: `hsl(${p.accent} / 0.85)`, color: "hsl(230 15% 5%)" }}
