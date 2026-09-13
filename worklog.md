@@ -96,3 +96,48 @@ Stage Summary:
 - Vercel-сторона домена готова полностью (apex+www+редирект). Осталось: сменить 2 DNS-записи в reg.ru (только владелец) и настроить GitHub-связку (ждём токен).
 - DNS обновлён владельцем в reg.ru (скрин 33: A @ → 76.76.21.21, CNAME www → cname.vercel-dns.com). Распространение подтверждено через 8.8.8.8 и 1.1.1.1. Домен ЖИВОЙ: https://shackirzyanov.ru отдаёт новый сайт (HTTP 200, title новый), www → 301 → apex, SSL Let's Encrypt выпущен автоматически. Старый netlify-сайт больше не на домене.
 - Осталось: автодеплой — ждём от владельца приватный GitHub-репозиторий + fine-grained токен (Contents RW).
+- Автодеплой настроен и проверен. Цепочка: git push main → GitHub goodsinternet/shakirzianov-site → Vercel Git-интеграция → прод → shackirzyanov.ru.
+- Код запушен (приватный репо, main). Перед пушем из git убран шаблонный мусор (db/, examples/, mini-services/, .zscripts/ — локально сохранены, в .gitignore).
+- vercel git connect создал link (type github, productionBranch main). Первый git-деплой висел в BLOCKED: локальный git-автор «Dev <dev@local>» не связан с GitHub → Vercel не резолвит автора (githubCommitAuthorLogin: None) и держит деплой без сборки. Решение: git config user.name "goodsinternet", user.email "213018575+goodsinternet@users.noreply.github.com" → новый коммит → BUILDING → READY, домен 200.
+- ВАЖНО на будущее: коммиты в этот воркспейс теперь идут от GitHub-идентичности goodsinternet — менять нельзя, иначе автодеплой снова будет блокироваться.
+- Владельцу: оба токена (Vercel + GitHub) можно отозвать — Git-интеграции они больше не нужны.
+
+---
+Task ID: 7
+Agent: main (Super Z)
+Task: Добавить в портфолио lid-parser.space-z.ai (скриншоты 51–54) и задеплоить
+
+Work Log:
+- Просмотрены скриншоты 51–54: ЛидПарсер — поиск бизнесов без сайта (OSM, 2ГИС, Яндекс, Google), вкладки Парсер/Лиды/Панель/Настройки, экспорт CSV, воронка, локальные API-ключи в SQLite
+- Проверен живой сайт: title «ЛидПарсер — поиск бизнесов без сайта», стек React/Next-маркеры в HTML
+- Скриншот_51 (таблица лидов) → public/assets/portfolio-lidparser.webp (28 KB, q82, края ровные)
+- projects.ts: +9-й проект «ЛидПарсер» (accent 160 84% 39%, imageFit contain, честный стек «React: официальные API карт, локальная база SQLite; собрано вайбкодингом»), 4 пункта «Что внутри»
+- npm run build — ок (4/4), визуальная проверка карточки в браузере на :3111 — ок
+- Коммит 33e501c «portfolio: +ЛидПарсер (lid-parser.space-z.ai)»
+- Деплой провалился: Vercel-токен vcp_… стал limited — /v2/user отдаёт goodsinternet, но ВСЕ ресурсные эндпоинты (teams/projects/deployments/POST v13) → 403 «You must re-authenticate to this scope»; CLI: «No teams available»
+- GitHub PAT: «Bad credentials» — недействителен
+- shackirzyanov.ru: HTTP 200, сайт жив, старая версия (без ЛидПарсера)
+
+Stage Summary:
+- Карточка готова локально и закоммичена; прод ждёт деплоя
+- БЛОКЕР: нужен новый Vercel-токен с полным доступом к аккаунту (Full Account) — текущий ограничен и не пускает к проекту/деплою
+- БЛОКЕР: GitHub PAT просрочен/отозван — нужен новый (fine-grained, Contents RW, выбран репозиторий) для пуша + git connect
+
+---
+Task ID: 8
+Agent: main (Super Z)
+Task: Деплой «ЛидПарсер» с новым Vercel-токеном
+
+Work Log:
+- Новый токен vcp_4eZd… проверен: /v2/user + доступ к prj_K3yYBDZOM00ElfjCnxkzvYCSwoWu (shakirzianov) — ок
+- Первый `vercel --prod` ушёл в автоматически созданный проект my-project (CLI проигнорировал связь) — проект удалён через API (HTTP 204)
+- Пересоздана связь: vercel link --yes --project=shakirzianov (CLI создал .env.local — покрыт .gitignore*.env*)
+- Повторный `vercel --prod` → dpl_9sxN READY, target production
+- Прямые URL деплоя отдают 302 на vercel.com/sso-api — это Deployment Protection, прод-домен работает публично
+- shackirzyanov.ru: HTTP 200, «ЛидПарсер» в HTML, /assets/portfolio-lidparser.webp → 200 (29636 bytes)
+- Визуальная проверка карточки в браузере на проде — ок
+
+Stage Summary:
+- 9 проектов в портфолио в проде: https://shackirzyanov.ru
+- Осталось: автодеплой GitHub (ждёт валидный PAT + имя репозитория)
+- Старые токены (vcp_1hob… limited + GitHub PAT) можно удалить в дашбордах
