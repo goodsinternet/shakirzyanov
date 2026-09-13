@@ -61,3 +61,6 @@ upload/
 /examples/
 /mini-services/
 /.zscripts/
+
+# SSH deploy keys (никогда не коммитить)
+.ssh/

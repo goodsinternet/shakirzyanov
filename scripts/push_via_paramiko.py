@@ -60,7 +60,10 @@ class ParamikoVendor:
             timeout=30,
         )
         channel = client.get_transport().open_session()
-        cmd = " ".join(a.decode() for a in argv)
+        if isinstance(argv, (bytes, bytearray)):
+            cmd = argv.decode()
+        else:
+            cmd = " ".join(a.decode() if isinstance(a, (bytes, bytearray)) else str(a) for a in argv)
         channel.exec_command(cmd)
         return ParamikoWrapper(client, channel)
 

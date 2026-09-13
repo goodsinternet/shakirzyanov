@@ -141,3 +141,21 @@ Stage Summary:
 - 9 проектов в портфолио в проде: https://shackirzyanov.ru
 - Осталось: автодеплой GitHub (ждёт валидный PAT + имя репозитория)
 - Старые токены (vcp_1hob… limited + GitHub PAT) можно удалить в дашбордах
+
+---
+Task ID: 9
+Agent: main (Super Z)
+Task: Автодеплой GitHub → Vercel через deploy-ключ
+
+Work Log:
+- 3 GitHub-PAT подряд без Contents RW → отказ от токенов в пользу SSH deploy-ключа
+- Сгенерирован ed25519-ключ (scripts/gen_deploy_key.py, cryptography), known_hosts из api.github.com/meta
+- В системе нет ssh-клиента → пуш через dulwich + paramiko (scripts/push_via_paramiko.py, кастомный SSHVendor: argv — одна bytes-строка, путь — str)
+- Vercel git link переключён с shakirzianov-site на goodsinternet/shakirzyanov через `vercel git connect`
+- Первый пуш отклонён push protection: UUID-автокоммиты захватили .ssh/deploy_ed25519 (приватный ключ). Фикс: .ssh/ в .gitignore, reset --soft origin/main, один чистый коммит 84c2f4a
+- Пуш успешен → Vercel сам собрал dpl_MfeC (READY, production) — автодеплой работает
+
+Stage Summary:
+- Цепочка: git push → github.com/goodsinternet/shakirzyanov → Vercel prod shackirzyanov.ru
+- Пушить: git push (remote origin = git@…, core.sshCommand прописан)
+- shakirzianov-site и старые PAT более не используются
